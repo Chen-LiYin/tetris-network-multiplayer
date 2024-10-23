@@ -5,6 +5,10 @@ class Tetris {
     this.context = this.canvas.getContext("2d");
     this.context.scale(20, 20);
 
+    this.nextCanvas = element.querySelector(".next-piece");
+    this.nextContext = this.nextCanvas.getContext("2d");
+    this.nextContext.scale(20, 20);
+
     this.arena = new Arena(12, 20);
     this.player = new Player(this);
     this.player.events.listen("score", (score) => {
@@ -25,6 +29,11 @@ class Tetris {
     this.player.events.listen("score", (score) => {
       this.updateScore(score);
     });
+    this.player.events.listen("nextPiece", (piece) => {
+      console.log("Next piece event received:", piece);
+      this.drawNextPiece(piece);
+    });
+    this.drawNextPiece(this.player.nextPiece);
 
     let lastTime = 0;
     this._update = (time = 0) => {
@@ -71,13 +80,30 @@ class Tetris {
       this.context.stroke();
     }
   }
+  drawNextPiece(matrix) {
+    this.nextContext.fillStyle = "#000";
+    this.nextContext.fillRect(
+      0,
+      0,
+      this.nextCanvas.width,
+      this.nextCanvas.height
+    );
 
-  drawMatrix(matrix, offset) {
+    const blockSize = 20;
+    const matrixWidth = matrix[0].length * blockSize;
+    const matrixHeight = matrix.length * blockSize;
+
+    const offsetX = (this.nextCanvas.width - matrixWidth) / 2 / blockSize;
+    const offsetY = (this.nextCanvas.height - matrixHeight) / 2 / blockSize;
+
+    this.drawMatrix(matrix, { x: offsetX, y: offsetY }, this.nextContext);
+  }
+  drawMatrix(matrix, offset, context = this.context) {
     matrix.forEach((row, y) => {
       row.forEach((value, x) => {
         if (value !== 0) {
-          this.context.fillStyle = this.colors[value];
-          this.context.fillRect(x + offset.x, y + offset.y, 1, 1);
+          context.fillStyle = this.colors[value];
+          context.fillRect(x + offset.x, y + offset.y, 1, 1);
         }
       });
     });

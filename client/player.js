@@ -13,6 +13,7 @@ class Player {
 
     this.pos = { x: 0, y: 0 };
     this.matrix = null;
+    this.nextPiece = null;
     this.score = 0;
 
     this.reset();
@@ -90,6 +91,17 @@ class Player {
   reset() {
     const pieces = "ILJOTSZ";
     this.matrix = this.createPiece(pieces[(pieces.length * Math.random()) | 0]);
+    if (this.nextPiece) {
+      this.matrix = this.nextPiece;
+    } else {
+      this.matrix = this.createPiece(
+        pieces[(pieces.length * Math.random()) | 0]
+      );
+    }
+    this.nextPiece = this.createPiece(
+      pieces[(pieces.length * Math.random()) | 0]
+    );
+    this.generateNextPiece();
     this.pos.y = 0;
     this.pos.x =
       ((this.tetris.arena.matrix[0].length / 2) | 0) -
@@ -101,8 +113,18 @@ class Player {
       this.events.emit("score", this.score);
     }
 
+    this.events.emit("nextPiece", this.nextPiece);
     this.events.emit("pos", this.pos);
     this.events.emit("matrix", this.matrix);
+    console.log("Next piece event emitted");
+  }
+  generateNextPiece() {
+    const pieces = "ILJOTSZ";
+    this.nextPiece = this.createPiece(
+      pieces[(pieces.length * Math.random()) | 0]
+    );
+    console.log("Next piece generated:", this.nextPiece);
+    this.events.emit("nextPiece", this.nextPiece);
   }
 
   rotate(dir) {
