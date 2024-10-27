@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>俄羅斯方塊 - 首頁</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+      }
+      .container {
+        text-align: center;
+        background-color: white;
+        padding: 2em;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #333;
+      }
+      button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      input {
+        margin: 10px;
+        padding: 5px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>俄羅斯方塊</h1>
+      <input type="text" id="nickname" placeholder="輸入暱稱" />
+      <br />
+      <button onclick="startSinglePlayer()">單人模式</button>
+      <button onclick="createRoom()">創建多人房間</button>
+      <br />
+      <input type="text" id="roomId" placeholder="輸入房間號" />
+      <button onclick="joinRoom()">加入房間</button>
+      <p id="roomInfo" style="display: none"></p>
+    </div>
+
+    <script>
+      function startSinglePlayer() {
+        const nickname = document.getElementById("nickname").value;
+        window.location.href = `index.html?nickname=${encodeURIComponent(
+          nickname
+        )}`;
+      }
+
+      function createRoom() {
+        const roomId = Math.random().toString(36).substr(2, 6);
+        const roomInfo = document.getElementById("roomInfo");
+        roomInfo.textContent = `房間號：${roomId}`;
+        roomInfo.style.display = "block";
+
+        // 可以選擇自動將房間號填入輸入框
+        document.getElementById("roomId").value = roomId;
+
+        // 如果您希望立即進入房間，可以取消下面這行的註釋
+        // window.location.href = `index.html#${roomId}`;
+      }
+
+      function joinRoom() {
+        const nickname = document.getElementById("nickname").value;
+        const roomId = document.getElementById("roomId").value;
+        if (roomId) {
+          window.location.href = `index.html?nickname=${encodeURIComponent(
+            nickname
+          )}#${roomId}`;
+        } else {
+          alert("請輸入房間號");
+        }
+      }
+    </script>
+  </body>
+</html>

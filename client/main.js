@@ -6,6 +6,15 @@ tetrisLocal.run();
 const connectionManager = new ConnectionManager(tetrisManager);
 connectionManager.connect("ws://" + window.location.hostname + ":9000");
 
+// 檢查 URL 中是否有房間 ID
+const roomId = window.location.hash.slice(1);
+if (roomId) {
+  connectionManager.connect(`ws://${window.location.hostname}:9000/${roomId}`);
+} else {
+  // 單人模式，不需要連接
+  console.log("單人模式");
+}
+
 const keyListener = (event) => {
   const player = tetrisLocal.player;
 

@@ -53,9 +53,13 @@ function broadcastSession(session) {
 }
 
 console.log("WebSocket  on 9001");
-server.on("connection", (conn) => {
+server.on("connection", (conn, req) => {
   console.log("Connection established");
   const client = createClient(conn);
+
+  const roomId = req.url.slice(1); // 從 URL 中獲取房間 ID
+  let session = getSession(roomId) || createSession(roomId);
+  session.join(client);
 
   conn.on("message", (msg) => {
     console.log("Message received", msg);

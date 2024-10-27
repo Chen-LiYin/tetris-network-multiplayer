@@ -24,6 +24,22 @@
         width: 120px;
         height: 120px;
       }
+      .controls button {
+        font-size: 1em;
+        padding: 10px 20px;
+        margin: 10px;
+      }
+      .game-over {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+        z-index: 1000;
+      }
       canvas {
         border: solid 0.2em #707070;
         height: 80vh;
