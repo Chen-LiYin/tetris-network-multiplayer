@@ -14,6 +14,7 @@ class ConnectionManager {
 
     this.conn.addEventListener("open", () => {
       console.log("Connection established");
+      console.log("WebSocket readyState:", this.conn.readyState); // 確認連線狀態
       this.initSession();
       this.watchEvents();
     });
@@ -47,6 +48,7 @@ class ConnectionManager {
     const player = local.player;
     ["pos", "matrix", "score"].forEach((key) => {
       player.events.listen(key, () => {
+        console.log(`Sending ${key} state update...`); // 添加日誌確認事件觸發
         this.send({
           type: "state-update",
           fragment: "player",

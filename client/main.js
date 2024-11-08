@@ -46,5 +46,7 @@ const keyListener = (event) => {
   }
 };
 
-document.addEventListener("keydown", keyListener);
+document.addEventListener("keydown", (event) => {
+  console.log("Key pressed:", event.key); // 確認按鍵是否被捕獲
+});
 document.addEventListener("keyup", keyListener);
