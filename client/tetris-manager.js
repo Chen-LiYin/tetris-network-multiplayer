@@ -9,6 +9,7 @@ class TetrisManager {
 
   createPlayer() {
     if (!this.template) {
+      console.error("Player template not found");
       return null;
     }
     const element = document.importNode(this.template.content, true)

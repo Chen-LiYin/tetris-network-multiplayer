@@ -2,7 +2,7 @@ const WebSocketServer = require("ws").Server;
 const Session = require("./session");
 const Client = require("./client");
 
-const server = new WebSocketServer({ port: 9000 });
+const server = new WebSocketServer({ port: 443 });
 const sessions = new Map();
 
 function createId(len = 6, chars = "abcdefghjkmnopqrstvwxyz01234567890") {

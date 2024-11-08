@@ -11,8 +11,7 @@ const roomId = window.location.hash.slice(1);
 if (roomId) {
   connectionManager.connect(`ws://${window.location.hostname}:9000/${roomId}`);
 } else {
-  // 單人模式，不需要連接
-  console.log("單人模式");
+  console.error("Start game button not found");
 }
 
 const keyListener = (event) => {
