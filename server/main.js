@@ -52,8 +52,9 @@ function broadcastSession(session) {
   });
 }
 
-console.log("WebSocket  on 9001");
+console.log("WebSocket  on 443");
 server.on("connection", (conn, req) => {
+  conn.setHeader("Access-Control-Allow-Origin", "*"); //cors 跨域問題
   console.log("Connection established");
   const client = createClient(conn);
 

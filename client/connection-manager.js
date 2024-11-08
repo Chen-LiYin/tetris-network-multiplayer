@@ -8,7 +8,9 @@ class ConnectionManager {
   }
 
   connect(address) {
-    this.conn = new WebSocket(address);
+    this.conn = new WebSocket(
+      "wss://tetris-multiplayer-f0enebbagqf6g6ba.canadacentral-01.azurewebsites.net"
+    );
 
     this.conn.addEventListener("open", () => {
       console.log("Connection established");
